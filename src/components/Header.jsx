@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
     state = {}
@@ -11,15 +12,27 @@ export default class Header extends Component {
 
         return (
             <Menu>
-                <Menu.Item
-                    name='home'
-                    active={activeItem === 'home'}
-                    onClick={this.handleItemClick}
-                    href="/"
-                >
-                    Home
-                    {/* <Link to='/'>Home</Link> */}
-                </Menu.Item>
+                <Link to='/'>
+                    <Menu.Item
+                        name='home'
+                        active={activeItem === 'home'}
+                        onClick={this.handleItemClick}
+                        href="/"
+                        >
+                        Home
+                    </Menu.Item>
+                </Link>
+
+                <Link to='/jobs/new'>
+                    <Menu.Item
+                        name='jobsNew'
+                        active={activeItem === 'jobsNew'}
+                        onClick={this.handleItemClick}
+                        href="/jobs/new"
+                    >
+                        Create Job
+                    </Menu.Item>
+                </Link>
             </Menu>
         );
     }

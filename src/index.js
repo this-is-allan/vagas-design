@@ -14,18 +14,10 @@ import 'firebase/firestore'
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import { reactReduxFirebase } from 'react-redux-firebase';
+import JobsNew from './components/Jobs/JobsNew';
 
 firebase.initializeApp(fbConfig)
 firebase.firestore();
-
-// Add reduxFirestore store enhancer to store creator
-// const createStoreWithFirebase = compose(
-//     reduxFirestore(firebase, {
-//         userProfile: 'users',
-//         userFirestoreForProfile: true,
-//         enableLogging: false
-//     }),
-// )(createStore)
 
 const rrfConfig = {
     userProfile: 'users',
@@ -46,6 +38,7 @@ ReactDOM.render(
             <Container>
                 <Header />
                 <Switch>
+                    <Route path='/jobs/new' component={JobsNew} />
                     <Route path='/' component={App} />
                 </Switch>
             </Container>
