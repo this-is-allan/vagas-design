@@ -28,8 +28,8 @@ firebase.firestore();
 // )(createStore)
 
 const rrfConfig = {
-    userProfile: 'users'
-    // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
+    userProfile: 'users',
+    useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 }
 
 const createStoreWithFirebase = compose(
