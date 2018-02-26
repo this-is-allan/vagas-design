@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Checkbox, Form, TextArea, Input } from 'semantic-ui-react'
 import { createJob } from './../../actions';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form';
 
@@ -21,7 +20,6 @@ class JobsNew extends Component {
     renderField(field) {
         return (
             <Form.Field
-                control={Input}
                 label={field.label}
                 placeholder={field.placeholder}
                 control={field.control}

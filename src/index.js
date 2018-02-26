@@ -7,14 +7,16 @@ import { firebase as fbConfig } from './config/firebase';
 
 import Header from './components/Header';
 
-import { createStore, compose } from 'redux'
-import { reduxFirestore } from 'redux-firestore'
-import firebase from 'firebase'
-import 'firebase/firestore'
+import { createStore, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { reduxFirestore } from 'redux-firestore';
+import firebase from 'firebase';
+import 'firebase/firestore';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import { reactReduxFirebase } from 'react-redux-firebase';
 import JobsNew from './components/Jobs/JobsNew';
+import LoginPage from './components/Auth/LoginPage';
 
 firebase.initializeApp(fbConfig)
 firebase.firestore();
@@ -26,7 +28,8 @@ const rrfConfig = {
 
 const createStoreWithFirebase = compose(
     reactReduxFirebase(firebase, rrfConfig),
-    reduxFirestore(firebase)
+    reduxFirestore(firebase, rrfConfig),
+    applyMiddleware(thunk)
 )(createStore)
 
 const initialState = {}
@@ -38,6 +41,7 @@ ReactDOM.render(
             <Container>
                 <Header />
                 <Switch>
+                    <Route path='/login' component={LoginPage} />
                     <Route path='/jobs/new' component={JobsNew} />
                     <Route path='/' component={App} />
                 </Switch>

@@ -12,27 +12,35 @@ export default class Header extends Component {
 
         return (
             <Menu>
-                <Link to='/'>
-                    <Menu.Item
-                        name='home'
-                        active={activeItem === 'home'}
-                        onClick={this.handleItemClick}
-                        href="/"
-                        >
-                        Home
-                    </Menu.Item>
-                </Link>
-
-                <Link to='/jobs/new'>
-                    <Menu.Item
-                        name='jobsNew'
-                        active={activeItem === 'jobsNew'}
-                        onClick={this.handleItemClick}
-                        href="/jobs/new"
+                <Menu.Item
+                    as={Link}
+                    to='/'
+                    name='home'
+                    active={activeItem === 'home'}
+                    onClick={this.handleItemClick}
                     >
-                        Create Job
-                    </Menu.Item>
-                </Link>
+                    Home
+                </Menu.Item>
+
+                <Menu.Item
+                    as={Link}
+                    to='/jobs/new'
+                    name='jobsNew'
+                    active={activeItem === 'jobsNew'}
+                    onClick={this.handleItemClick}
+                >
+                    Create Job
+                </Menu.Item>
+
+                <Menu.Item
+                    as={Link}
+                    to='/login'
+                    name='loginPage'
+                    active={activeItem === 'loginPage'}
+                    onClick={this.handleItemClick}
+                >
+                    Login
+                </Menu.Item>
             </Menu>
         );
     }
