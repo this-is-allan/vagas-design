@@ -1,4 +1,5 @@
 export const FETCH_JOBS = 'fetch_jobs';
+export const CREATE_JOB = 'create_job';
 
 export function fetchJobs() {
     // base.get('jobs', {
@@ -9,10 +10,14 @@ export function fetchJobs() {
 
     // });
     
-    const jobs = {};
+    // const jobs = {};
     
-    return {
-        type: FETCH_JOBS,
-        payload: jobs
-    }
+    // return {
+        // type: FETCH_JOBS,
+        // payload: jobs
+    // }
+}
+
+export function createJob() {
+    return null;
 }
