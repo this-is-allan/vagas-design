@@ -5,19 +5,20 @@ import { withFirebase } from 'react-redux-firebase'
 class LoginPage extends Component {
     
     login() {
-        const provider = new this.props.firebase.auth.FacebookAuthProvider();
-        this.props.firebase.auth().signInWithPopup(provider).then(function(result) {
-            console.log(result);
-        }).catch(function(error) {
-            console.log(error);
-        });
+        this.props.firebase.login({
+            provider: 'facebook',
+            type: 'popup'
+        })
     }
     
     isLogged() {
+        // const teste = this.props.firebase.auth();
+        // console.log(state.firebase.profile);
+
         this.props.firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 console.log(true);
-                console.log(user);
+                console.log(user.displayName);
             } else {
                 console.log(false);
             }
