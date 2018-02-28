@@ -17,6 +17,7 @@ import { Provider } from 'react-redux';
 import { reactReduxFirebase } from 'react-redux-firebase';
 import JobsNew from './components/Jobs/JobsNew';
 import LoginPage from './components/Auth/LoginPage';
+import Routes from './Routes';
 
 firebase.initializeApp(fbConfig)
 firebase.firestore();
@@ -37,16 +38,7 @@ const store = createStoreWithFirebase(rootReducer, initialState)
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
-            <Container>
-                <Header />
-                <Switch>
-                    <Route path='/login' component={LoginPage} />
-                    <Route path='/jobs/new' component={JobsNew} />
-                    <Route path='/' component={App} />
-                </Switch>
-            </Container>
-        </BrowserRouter>
+        <Routes />
     </Provider>,
     document.getElementById('root')
 );

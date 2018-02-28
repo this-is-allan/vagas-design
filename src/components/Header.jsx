@@ -32,9 +32,8 @@ class Header extends Component {
     render() {
         const { activeItem } = this.state;
         const { profile } = this.props;
+        const isLoggedIn = this.props.profile.isEmpty;
 
-        console.log(profile);
-        
         return (
             <Menu size='large'>
                 <Menu.Item
@@ -59,7 +58,7 @@ class Header extends Component {
 
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Dropdown trigger={<MyProfile name={profile.displayName} photo={profile.avatarUrl} />} pointing='top' options={options} icon={null} />
+                        <Dropdown loading trigger={<MyProfile name={profile.displayName} photo={profile.avatarUrl} />} pointing='top' options={options} icon={null} />
                     </Menu.Item>
 
                     <Menu.Item>
@@ -70,51 +69,15 @@ class Header extends Component {
                             name='loginPage'
                             active={activeItem === 'loginPage'}
                             onClick={this.handleItemClick}
-                        >
-                            Sign in
-                        </Button>
+                            content='Sign in'
+                        />
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>
         )
-
-        return (
-            <Menu>
-                <Menu.Item
-                    as={Link}
-                    to='/'
-                    name='home'
-                    active={activeItem === 'home'}
-                    onClick={this.handleItemClick}
-                    >
-                    Home
-                </Menu.Item>
-
-                <Menu.Item
-                    as={Link}
-                    to='/jobs/new'
-                    name='jobsNew'
-                    active={activeItem === 'jobsNew'}
-                    onClick={this.handleItemClick}
-                >
-                    Create Job
-                </Menu.Item>
-
-                <Menu.Item
-                    as={Link}
-                    to='/login'
-                    name='loginPage'
-                    active={activeItem === 'loginPage'}
-                    onClick={this.handleItemClick}
-                >
-                    Login
-                </Menu.Item>
-            </Menu>
-        );
     }
 }
 
 export default connect((state) => ({
     profile: state.firebase.profile
-    
 }))(Header)

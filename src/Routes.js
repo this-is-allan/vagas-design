@@ -1,0 +1,52 @@
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { withFirebase } from 'react-redux-firebase'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { Container } from 'semantic-ui-react';
+
+import Header from './components/Header';
+import App from './components/App';
+import JobsNew from './components/Jobs/JobsNew';
+import LoginPage from './components/Auth/LoginPage';
+
+function PrivateRoute({ component: Component, authed, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={(props) => authed === true
+                ? <Component {...props} />
+                : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+        />
+    )
+}
+
+
+class Routes extends Component {
+    static contextTypes = {
+        store: PropTypes.object.isRequired
+    }
+
+    render() {
+        const isLoggedIn = this.props.profile.isEmpty;
+        
+        return (
+            <BrowserRouter>
+                <Container>
+                    <Header />
+                    <Switch>
+                        <PrivateRoute authed={!isLoggedIn} path='/jobs/new' component={JobsNew} />
+                        <Route path='/login' component={LoginPage} />
+                        <Route path='/' component={App} />
+                    </Switch>
+                </Container>
+            </BrowserRouter>
+        )
+    }
+}
+
+// export default withFirebase(Routes);
+
+export default connect((state) => ({
+    profile: state.firebase.profile
+}))(Routes)
