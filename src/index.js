@@ -26,7 +26,7 @@ firebase.firestore();
 
 const rrfConfig = {
     userProfile: 'users',
-    attachAuthIsReady: true,
+    // attachAuthIsReady: true,
     useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 }
 

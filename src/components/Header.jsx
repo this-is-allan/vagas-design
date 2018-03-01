@@ -10,7 +10,7 @@ import { compose } from 'redux';
 function MyProfile(props) {
     return (
         <span>
-            <Image avatar src={props.photo} /> {props.name}
+            <Image avatar src={props.photo} />
         </span>
     )
 }
@@ -33,34 +33,13 @@ function LoginButton(props) {
     )
 }
 
-// function LogoutButton(props) {
-//     return (
-//         <Menu.Menu position='right'>
-//             <Menu.Item>
-//                 <Button
-//                     onClick={() => console.log(props.auth)}
-//                     content='Logout'
-//                 />
-//             </Menu.Item>
-//         </Menu.Menu>
-//     )
-// }
-
 class Header extends Component {
     state = {}
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-    sair() {
-        this.props.firebase.auth().signOut().then(function () {
-            console.log('saiu da conta com sucesso!');
-        }).catch(function (error) {
-            console.log('Ocorreu um erro', error)
-        });
-    }
-
     logout() {
-        console.log(this.props.auth());
+        console.log(this.props.firebase.auth().signOut());
     }
 
     render() {
@@ -70,7 +49,7 @@ class Header extends Component {
         const options = [
             { key: 'user', text: 'Account', icon: 'user' },
             { key: 'settings', text: 'Settings', icon: 'settings' },
-            { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: () => this.logout() }
+            { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: this.logout.bind(this) }
         ]
 
         return (
@@ -101,20 +80,8 @@ class Header extends Component {
                         // <LogoutButton activeItem={activeItem} handleItemClick={this.handleItemClick} auth={auth} />
                         <Menu.Menu position='right'>
                             <Menu.Item>
-                                <Dropdown loading trigger={<MyProfile name={auth.displayName} photo={auth.photoURL} />} pointing='top' options={options} icon={null} />
+                                <Dropdown loading trigger={<MyProfile photo={auth.photoURL} />} pointing='top' options={options} icon={null} />
                             </Menu.Item>
-
-                            <Menu.Item
-                                onClick={this.sair.bind(this)}
-                            >
-                                Sair
-                        </Menu.Item>
-                            {/* <Menu.Item>
-                            <Button
-                                onClick={(auth) => auth.firebase.logout()}
-                                content='Logout'
-                            />
-                        </Menu.Item> */}
                         </Menu.Menu>
                     )}
             </Menu>
@@ -127,12 +94,3 @@ export default compose(
     firebaseConnect(), // withFirebase can also be used
     connect(({ firebase: { auth } }) => ({ auth }))
 )(Header)
-
-
-
-// export default withFirebase(Header);
-
-// export default connect((state) => ({
-//     auth: state.firebase.auth,
-//     profile: state.firebase.profile
-// }))(Header)
