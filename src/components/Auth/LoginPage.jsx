@@ -15,6 +15,8 @@ class LoginPage extends Component {
         // const teste = this.props.firebase.auth();
         // console.log(state.firebase.profile);
 
+        // console.log(this.props.firebase.auth().currentUser.displayName)
+        
         this.props.firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 console.log(true);

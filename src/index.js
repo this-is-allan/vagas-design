@@ -4,6 +4,8 @@ import App from './components/App';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import { firebase as fbConfig } from './config/firebase';
+import logger from 'redux-logger'
+
 
 import Header from './components/Header';
 
@@ -24,13 +26,15 @@ firebase.firestore();
 
 const rrfConfig = {
     userProfile: 'users',
+    attachAuthIsReady: true,
     useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 }
 
 const createStoreWithFirebase = compose(
     reactReduxFirebase(firebase, rrfConfig),
     reduxFirestore(firebase, rrfConfig),
-    applyMiddleware(thunk)
+    applyMiddleware(thunk),
+    applyMiddleware(logger)
 )(createStore)
 
 const initialState = {}
