@@ -5,7 +5,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import { firebase as fbConfig } from './config/firebase';
 import logger from 'redux-logger'
-
+import { Router } from 'react-router'
+import createBrowserHistory from 'history/createBrowserHistory'
 
 import Header from './components/Header';
 
@@ -26,7 +27,7 @@ firebase.firestore();
 
 const rrfConfig = {
     userProfile: 'users',
-    // attachAuthIsReady: true,
+    attachAuthIsReady: true,
     useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 }
 
@@ -40,9 +41,13 @@ const createStoreWithFirebase = compose(
 const initialState = {}
 const store = createStoreWithFirebase(rootReducer, initialState)
 
+const history = createBrowserHistory();
+
 ReactDOM.render(
     <Provider store={store}>
-        <Routes />
+        {/* <Router history={history}> */}
+            <Routes />
+        {/* </Router> */}
     </Provider>,
     document.getElementById('root')
 );

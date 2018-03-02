@@ -6,7 +6,7 @@ import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types'
 import { compose } from 'redux';
 import faker from 'faker';
-
+import { Link, withRouter } from 'react-router-dom';
 
 class LoginPage extends Component {
     static contextTypes = {
@@ -14,11 +14,15 @@ class LoginPage extends Component {
     }
 
     login() {
-        this.props.firebase.login({
+        const login = this.props.firebase.login({
             provider: "google",
             provider: "facebook",
             type: "popup"
         })
+
+        if (login) {
+            this.props.history.push({ pathname: '/' })
+        }
     }
 
     isLogged() {
@@ -35,10 +39,12 @@ class LoginPage extends Component {
             password: values.password
         });
 
-        console.log(credentials)
         this.props.firebase.createUser(credentials)
         .then(function() {
+            this.props.history.push({ pathname: '/' })
+            // this.props.history.push('/');
         }).catch(function(error) {
+            console.log('error', error)
         });
     }
 
@@ -53,6 +59,19 @@ class LoginPage extends Component {
                 {...field.input}
             />
         );
+    }
+
+    validate(values) {
+        const errors = {};
+
+        if (!values.email) {
+            errors.title = "Enter a title"
+        }
+
+        if (!values.password) {
+            errors.password = "Enter a password"
+        }
+        return errors;
     }
 
     render() {
@@ -72,7 +91,6 @@ class LoginPage extends Component {
                     <Divider horizontal>Or</Divider>
 
                     <Form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                    {/* <Form> */}
                         <Field
                             label="Email"
                             name="email"
@@ -105,8 +123,24 @@ class LoginPage extends Component {
     }
 }
 
+// export default reduxForm({
+//     form: 'UsersNewForm'
+// })(
+//     withFirebase(LoginPage),
+//     withRouter(LoginPage)
+// );
+
+// export default reduxForm({
+//     form: 'UsersNewForm'
+// })(
+//     withFirebase(LoginPage),
+//     withRouter(LoginPage)
+// );
+
+
 export default reduxForm({
     form: 'UsersNewForm'
 })(
-    withFirebase(LoginPage)
-);
+    withFirebase(LoginPage),
+    withRouter(LoginPage)
+)

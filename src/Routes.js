@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch, Redirect } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -9,6 +9,7 @@ import Header from './components/Header';
 import App from './components/App';
 import JobsNew from './components/Jobs/JobsNew';
 import LoginPage from './components/Auth/LoginPage';
+import createBrowserHistory from 'history/createBrowserHistory'
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
     return (
@@ -29,6 +30,7 @@ class Routes extends Component {
 
     render() {
         const isLoggedIn = this.props.profile.isEmpty;
+        const customHistory = createBrowserHistory;
         
         return (
             <BrowserRouter>
