@@ -71,7 +71,7 @@ class Header extends Component {
                     active={activeItem === 'jobsNew'}
                     onClick={this.handleItemClick}
                 >
-                    Create Job
+                    Create a Job
                 </Menu.Item>
 
                 {isEmpty(auth) ? (

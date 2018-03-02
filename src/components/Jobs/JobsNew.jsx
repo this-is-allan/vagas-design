@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Checkbox, Form, TextArea, Input } from 'semantic-ui-react'
-import { createJob } from './../../actions';
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form';
 
@@ -65,7 +64,7 @@ class JobsNew extends Component {
 export default reduxForm({
     form: 'JobsNewForm'
 })(
-    connect(null, { createJob })(JobsNew)
+    connect(null)(JobsNew)
 );
 
 // export default connect(null)(JobsNew)
