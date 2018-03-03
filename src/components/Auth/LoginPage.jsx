@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Divider, Grid, Button, Icon, Form, Input } from 'semantic-ui-react';
+import { Message, Divider, Grid, Button, Icon, Form, Input } from 'semantic-ui-react';
 import { withFirebase, firebaseConnect } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form';
@@ -25,14 +25,6 @@ class LoginPage extends Component {
         }
     }
 
-    isLogged() {
-        this.props.firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-            } else {
-            }
-        });
-    }
-
     onSubmit(values) {
         const credentials = ({
             email: values.email,
@@ -40,38 +32,30 @@ class LoginPage extends Component {
         });
 
         this.props.firebase.createUser(credentials)
-        .then(function() {
+        .then(() => {
             this.props.history.push({ pathname: '/' })
-            // this.props.history.push('/');
-        }).catch(function(error) {
+        }).catch((error) => {
             console.log('error', error)
         });
     }
 
     renderField(field) {
+        const { meta: { touched, error } } = field;
+
         return (
-            <Form.Field
-                label={field.label}
-                type={field.type}
-                minLength={field.minLength}
-                placeholder={field.placeholder}
-                control={field.control}
-                {...field.input}
-            />
+            <div>
+                <Form.Field
+                    label={field.label}
+                    type={field.type}
+                    minLength={field.minLength}
+                    placeholder={field.placeholder}
+                    control={field.control}
+                    error={touched ? error : false}
+                    {...field.input}
+                />
+                <p>{error}</p>
+            </div>
         );
-    }
-
-    validate(values) {
-        const errors = {};
-
-        if (!values.email) {
-            errors.title = "Enter a title"
-        }
-
-        if (!values.password) {
-            errors.password = "Enter a password"
-        }
-        return errors;
     }
 
     render() {
@@ -94,6 +78,7 @@ class LoginPage extends Component {
                         <Field
                             label="Email"
                             name="email"
+                            type="email"
                             placeholder={`e.g., ${faker.internet.exampleEmail()}`}
                             control={Input}
                             component={this.renderField}
@@ -109,13 +94,12 @@ class LoginPage extends Component {
                         <Field
                             label="Password Confirmation"
                             name="password_confirmation"
+                            type="password"
                             control={Input}
                             component={this.renderField}
                         />
-                        <Button fluid type='submit'>Enter</Button>
-                        <br/>
-                        <br/>
-                        <br/>
+
+                        <Button fluid type='submit'>Sign in</Button>
                     </Form>
                 </Grid.Column>
             </Grid>
@@ -123,22 +107,26 @@ class LoginPage extends Component {
     }
 }
 
-// export default reduxForm({
-//     form: 'UsersNewForm'
-// })(
-//     withFirebase(LoginPage),
-//     withRouter(LoginPage)
-// );
+function validate(values) {
+    const errors = {};
 
-// export default reduxForm({
-//     form: 'UsersNewForm'
-// })(
-//     withFirebase(LoginPage),
-//     withRouter(LoginPage)
-// );
+    if (!values.email) {
+        errors.email = true;
+    }
 
+    if (!values.password || values.password.length < 6) {
+        errors.password = true;
+    }
+
+    if (!values.password_confirmation || values.password_confirmation.length < 6) {
+        errors.password_confirmation = true;
+    }
+
+    return errors;
+}
 
 export default reduxForm({
+    validate,
     form: 'UsersNewForm'
 })(
     withFirebase(LoginPage),
