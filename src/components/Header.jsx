@@ -15,16 +15,28 @@ function MyProfile(props) {
     )
 }
 
-function LoginButton(props) {
+function AuthButton(props) {
     return (
         <Menu.Menu position='right'>
             <Menu.Item>
                 <Button
-                    color="pink"
+                    secondary
                     as={Link}
                     to='/login'
-                    name='signUp'
-                    active={props.activeItem === 'signUp'}
+                    name='signin'
+                    active={props.activeItem === 'signin'}
+                    onClick={props.handleItemClick}
+                    content='Login'
+                />
+            </Menu.Item>
+
+            <Menu.Item>
+                <Button
+                    primary
+                    as={Link}
+                    to='/signup'
+                    name='signup'
+                    active={props.activeItem === 'signup'}
                     onClick={props.handleItemClick}
                     content='Sign up'
                 />
@@ -53,7 +65,7 @@ class Header extends Component {
         ]
 
         return (
-            <Menu size='large'>
+            <Menu>
                 <Menu.Item
                     as={Link}
                     to='/'
@@ -75,9 +87,8 @@ class Header extends Component {
                 </Menu.Item>
 
                 {isEmpty(auth) ? (
-                    <LoginButton activeItem={activeItem} handleItemClick={this.handleItemClick} />
+                    <AuthButton activeItem={activeItem} handleItemClick={this.handleItemClick} />
                 ) : (
-                        // <LogoutButton activeItem={activeItem} handleItemClick={this.handleItemClick} auth={auth} />
                         <Menu.Menu position='right'>
                             <Menu.Item>
                                 <Dropdown loading trigger={<MyProfile photo={auth.photoURL} />} pointing='top' options={options} icon={null} />
