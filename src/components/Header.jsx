@@ -23,10 +23,10 @@ function LoginButton(props) {
                     color="pink"
                     as={Link}
                     to='/login'
-                    name='loginPage'
-                    active={props.activeItem === 'loginPage'}
+                    name='signUp'
+                    active={props.activeItem === 'signUp'}
                     onClick={props.handleItemClick}
-                    content='Sign in'
+                    content='Sign up'
                 />
             </Menu.Item>
         </Menu.Menu>

@@ -8,21 +8,32 @@ import { compose } from 'redux';
 import faker from 'faker';
 import { Link, withRouter } from 'react-router-dom';
 
-class LoginPage extends Component {
+class SignUp extends Component {
     static contextTypes = {
         store: PropTypes.object.isRequired
     }
 
     login() {
-        const login = this.props.firebase.login({
+        const config = {
             provider: "google",
             provider: "facebook",
             type: "popup"
-        })
-
-        if (login) {
-            this.props.history.push({ pathname: '/' })
         }
+        this.props.firebase.login(config)
+        .then(() => {
+                this.props.history.push({ pathname: '/' })
+            }).catch(() => {
+                this.props.history.push({ pathname: '/login' })
+        });
+        // const login = this.props.firebase.login({
+        //     provider: "google",
+        //     provider: "facebook",
+        //     type: "popup"
+        // })
+
+        // if (login) {
+        //     this.props.history.push({ pathname: '/' })
+        // }
     }
 
     onSubmit(values) {
@@ -99,7 +110,7 @@ class LoginPage extends Component {
                             component={this.renderField}
                         />
 
-                        <Button fluid type='submit'>Sign in</Button>
+                        <Button fluid type='submit'>Create an account</Button>
                     </Form>
                 </Grid.Column>
             </Grid>
@@ -129,6 +140,6 @@ export default reduxForm({
     validate,
     form: 'UsersNewForm'
 })(
-    withFirebase(LoginPage),
-    withRouter(LoginPage)
+    withFirebase(SignUp),
+    withRouter(SignUp)
 )

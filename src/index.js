@@ -19,7 +19,7 @@ import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import { reactReduxFirebase } from 'react-redux-firebase';
 import JobsNew from './components/Jobs/JobsNew';
-import LoginPage from './components/Auth/LoginPage';
+import SignUp from './components/Auth/SignUp';
 import Routes from './Routes';
 
 firebase.initializeApp(fbConfig)

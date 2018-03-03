@@ -8,7 +8,7 @@ import { Container } from 'semantic-ui-react';
 import Header from './components/Header';
 import App from './components/App';
 import JobsNew from './components/Jobs/JobsNew';
-import LoginPage from './components/Auth/LoginPage';
+import SignUp from './components/Auth/SignUp';
 import createBrowserHistory from 'history/createBrowserHistory'
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
@@ -38,7 +38,7 @@ class Routes extends Component {
                     <Header />
                     <Switch>
                         <PrivateRoute authed={!isLoggedIn} path='/jobs/new' component={JobsNew} />
-                        <Route path='/login' component={LoginPage} />
+                        <Route path='/login' component={SignUp} />
                         <Route path='/' component={App} />
                     </Switch>
                 </Container>
