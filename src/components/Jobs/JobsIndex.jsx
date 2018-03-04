@@ -2,7 +2,8 @@ import _ from 'lodash';
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid, Card, Icon } from 'semantic-ui-react'
+import { Grid, Card, Icon, Label } from 'semantic-ui-react'
+import faker from 'faker';
 
 class JobsIndex extends Component {
     static contextTypes = {
@@ -26,8 +27,8 @@ class JobsIndex extends Component {
                             <Card.Content header={job.title} />
                             <Card.Content description={job.description} />
                             <Card.Content extra>
-                                <Icon name='user' />
-                                4 Friends
+                                <Label content='Remote' icon='home' color='pink' />
+                                <Label content='Presential' icon='anchor' color='black' />
                             </Card.Content>
                         </Card>
                     </Grid.Column>
