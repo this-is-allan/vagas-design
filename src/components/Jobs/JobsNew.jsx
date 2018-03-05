@@ -11,7 +11,6 @@ class JobsNew extends Component {
     }
     
     onSubmit(values) {
-        console.log(values);
         const { firestore } = this.context.store;
         firestore.add('jobs', values)
     }
