@@ -9,10 +9,16 @@ class JobsNew extends Component {
     static contextTypes = {
         store: PropTypes.object.isRequired
     }
-    
+
     onSubmit(values) {
         const { firestore } = this.context.store;
-        firestore.add('jobs', values)
+        const { title, description } = values;
+        const createdAt = firestore.FieldValue.serverTimestamp();
+
+        firestore.add(
+            { collection: 'jobs' },
+            { title, description, createdAt }
+        )
     }
 
     renderField(field) {
@@ -46,13 +52,6 @@ class JobsNew extends Component {
                     control={TextArea}
                     component={this.renderField}
                 />
-                <Field
-                    label="Public"
-                    name="status"
-                    control={Checkbox}
-                    default={true}
-                    component={this.renderField}
-                />
                 <Button type='submit'>Create Job</Button>
             </Form>
         );
@@ -65,8 +64,3 @@ export default reduxForm({
 })(
     connect(null)(JobsNew)
 );
-
-// export default connect(null)(JobsNew)
-// export default connect((state) => ({
-    // jobs: state.firestore.ordered.jobs
-// }))(JobsNew)
