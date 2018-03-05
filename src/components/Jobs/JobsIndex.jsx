@@ -12,7 +12,12 @@ class JobsIndex extends Component {
 
     componentWillMount() {
         const { firestore } = this.context.store
-        firestore.get('jobs')
+        // firestore.get('jobs')
+        firestore.get({
+            collection: 'jobs',
+            orderBy: ['createdAt', 'desc'],
+            where: ['status', '==', true]
+        })
     }
 
     render() {
