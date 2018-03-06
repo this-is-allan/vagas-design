@@ -1,14 +1,32 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Button, Dropdown, Image } from 'semantic-ui-react'
+import faker from 'faker'
+import { connect} from 'react-redux'
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import { compose } from 'redux'
 
-export default class MenuExampleStackable extends Component {
+function MyProfile(props) {
+    return (
+        <span>
+            <Image avatar src={props.photo} />
+        </span>
+    )
+}
+
+class Header extends Component {
     state = {}
-
+    
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
+    
     render() {
+        const { auth } = this.props;
         const { activeItem } = this.state
+        const authUser = Object.keys(window.localStorage).filter(item => item.startsWith('firebase:authUser'))[0];
+        const isLogged = authUser ? true : false;
+        const options = [
+            { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: () => this.props.firebase.auth().signOut() }
+        ]
 
         return (
             <Menu borderless size="large">
@@ -36,14 +54,49 @@ export default class MenuExampleStackable extends Component {
                     Create a job
                 </Menu.Item>
 
-                <Menu.Item
-                    name='sign-in'
-                    active={activeItem === 'sign-in'}
-                    onClick={this.handleItemClick}
-                >
-                    Sign-in
-                </Menu.Item>
+                {isLogged ? (
+                    <Menu.Menu position='right'>
+                        <Menu.Item
+                            name='sign-in'
+                            active={activeItem === 'sign-in'}
+                            onClick={this.handleItemClick}
+                            >
+                            Status
+                        </Menu.Item>
+                        <Menu.Item>
+                            <Dropdown loading trigger={<MyProfile photo={faker.internet.avatar()} />} pointing='top' options={options} icon={null} />
+                        </Menu.Item>
+                    </Menu.Menu>
+                ) : (
+                    <Menu.Menu position='right'>
+                        <Menu.Item
+                            as={Link}
+                            to='/login'
+                            name='sign-in'
+                            active={activeItem === 'sign-in'}
+                            onClick={this.handleItemClick}
+                            >
+                            Login
+                        </Menu.Item>
+
+                        <Menu.Item
+                            as={Link}
+                            to='/signup'
+                            name='sign-up'
+                            active={activeItem === 'sign-up'}
+                            onClick={this.handleItemClick}
+                            >
+                            Sign Up
+                        </Menu.Item>
+                    </Menu.Menu>
+                )}
+
             </Menu>
         )
     }
 }
+
+export default compose(
+    firebaseConnect(),
+    connect(({ firebase: { auth } }) => ({ auth }))
+)(Header)
