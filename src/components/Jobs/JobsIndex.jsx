@@ -35,8 +35,8 @@ class JobsIndex extends Component {
                                 <Card.Header>{job.title.substr(0, 40)}</Card.Header>
                                 <Card.Meta>{moment(job.createdAt).toNow(true)}</Card.Meta>
                                 <Card.Description>
-                                    <Label icon='globe' content='Remote' />
-                                    <Label icon='anchor' content='Presential' />
+                                    {job.remote ? <Label icon='globe' content='Remote' /> : ''}
+                                    {job.presential ? <Label icon='anchor' content='Presential' /> : ''}
                                 </Card.Description>
                             </Card.Content>
                         </Card>
