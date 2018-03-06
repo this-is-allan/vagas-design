@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Grid, Card, Icon, Label } from 'semantic-ui-react'
 import faker from 'faker';
+import * as moment from 'moment';
+
 
 class JobsIndex extends Component {
     static contextTypes = {
@@ -29,11 +31,13 @@ class JobsIndex extends Component {
                 return (
                     <Grid.Column mobile={16} computer={4} key={job.id}>
                         <Card fluid>
-                            <Card.Content header={job.title} />
-                            <Card.Content description={job.description} />
-                            <Card.Content extra>
-                                <Label content='Remote' icon='home' color='pink' />
-                                <Label content='Presential' icon='anchor' color='black' />
+                            <Card.Content>
+                                <Card.Header>{job.title.substr(0, 40)}</Card.Header>
+                                <Card.Meta>{moment(job.createdAt).toNow(true)}</Card.Meta>
+                                <Card.Description>
+                                    <Label icon='globe' content='Remote' />
+                                    <Label icon='anchor' content='Presential' />
+                                </Card.Description>
                             </Card.Content>
                         </Card>
                     </Grid.Column>
