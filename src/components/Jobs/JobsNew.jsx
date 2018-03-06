@@ -12,22 +12,24 @@ class JobsNew extends Component {
 
     onSubmit(values) {
         const { firestore } = this.context.store;
-        const { title, description } = values;
+        const { title, description, remote, presential } = values;
+        const status = false;
         const createdAt = firestore.FieldValue.serverTimestamp();
 
         firestore.add(
             { collection: 'jobs' },
-            { title, description, createdAt }
+            { title, description, remote, presential, status, createdAt }
         )
     }
 
     renderField(field) {
         return (
             <Form.Field
+                id={field.id}
+                name={field.name}
                 label={field.label}
                 placeholder={field.placeholder}
                 control={field.control}
-                defaultChecked={field.default}
                 {...field.input}
             />
         );
@@ -39,6 +41,7 @@ class JobsNew extends Component {
         return (
             <Form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <Field
+                    id="title"
                     label="Title"
                     name="title"
                     placeholder="Title"
@@ -46,10 +49,25 @@ class JobsNew extends Component {
                     component={this.renderField}
                     />
                 <Field
+                    id="description"
                     label="Description"
                     name="description"
                     placeholder="Tell us more about the job..."
                     control={TextArea}
+                    component={this.renderField}
+                />
+                <Field
+                    label="Remote"
+                    name="remote"
+                    id="remote"
+                    control={Checkbox}
+                    component={this.renderField}
+                />
+                <Field
+                    label="Presential"
+                    name="presential"
+                    id="presential"
+                    control={Checkbox}
                     component={this.renderField}
                 />
                 <Button type='submit'>Create Job</Button>
