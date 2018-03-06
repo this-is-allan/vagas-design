@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import JobsIndex from './Jobs/JobsIndex';
+import React from 'react';
+import Header from './Header';
+import Main from './Main';
 
-class App extends Component {
-  render() {
-    return (
-      <JobsIndex />
-    );
-  }
-}
+const App = () => (
+  <div>
+    <Header />
+    <Main />
+  </div>
+)
 
 export default App;
