@@ -31,6 +31,7 @@ class JobsNew extends Component {
                 placeholder={field.placeholder}
                 control={field.control}
                 {...field.input}
+                value={field.value}
             />
         );
     }
@@ -62,6 +63,7 @@ class JobsNew extends Component {
                     id="remote"
                     control={Checkbox}
                     component={this.renderField}
+                    value="remote"
                 />
                 <Field
                     label="Presential"
@@ -69,6 +71,7 @@ class JobsNew extends Component {
                     id="presential"
                     control={Checkbox}
                     component={this.renderField}
+                    value="presential"
                 />
                 <Button type='submit'>Create Job</Button>
             </Form>
