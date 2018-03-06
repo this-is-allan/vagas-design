@@ -22,8 +22,9 @@ class Header extends Component {
     render() {
         const { auth } = this.props;
         const { activeItem } = this.state
-        const authUser = Object.keys(window.localStorage).filter(item => item.startsWith('firebase:authUser'))[0];
-        const isLogged = authUser ? true : false;
+        const userKey = Object.keys(window.localStorage).filter(item => item.startsWith('firebase:authUser'))[0];
+        const user = userKey ? JSON.parse(localStorage.getItem(userKey)) : undefined;
+        const isLogged = userKey ? true : false;
         const options = [
             { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: () => this.props.firebase.auth().signOut() }
         ]
@@ -56,15 +57,8 @@ class Header extends Component {
 
                 {isLogged ? (
                     <Menu.Menu position='right'>
-                        <Menu.Item
-                            name='sign-in'
-                            active={activeItem === 'sign-in'}
-                            onClick={this.handleItemClick}
-                            >
-                            Status
-                        </Menu.Item>
                         <Menu.Item>
-                            <Dropdown loading trigger={<MyProfile photo={faker.internet.avatar()} />} pointing='top' options={options} icon={null} />
+                            <Dropdown loading trigger={<MyProfile photo={isLogged ? user.providerData[0].photoURL : faker.internet.avatar()} />} pointing='top' options={options} icon={null} />
                         </Menu.Item>
                     </Menu.Menu>
                 ) : (
