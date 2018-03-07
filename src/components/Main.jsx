@@ -6,6 +6,7 @@ import JobsNew from './Jobs/JobsNew';
 import { Container } from 'semantic-ui-react'
 import SignIn from './Auth/SignIn';
 import SignUp from './Auth/SignUp';
+import Dashboard from './Dashboard/Dashboard';
 
 const Main = () => (
     <Container>
@@ -15,6 +16,7 @@ const Main = () => (
             <Route path='/jobs/new' component={JobsNew} />
             <Route path='/login' component={SignIn} />
             <Route path='/signup' component={SignUp} />
+            <Route path='/dashboard' component={Dashboard} />
         </Switch>
     </Container>
 )

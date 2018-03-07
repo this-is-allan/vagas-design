@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { Menu, Button, Dropdown, Image } from 'semantic-ui-react'
 import faker from 'faker'
 import { connect} from 'react-redux'
@@ -26,7 +26,7 @@ class Header extends Component {
         const user = userKey ? JSON.parse(localStorage.getItem(userKey)) : undefined;
         const isLogged = userKey ? true : false;
         const options = [
-            { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: () => this.props.firebase.auth().signOut() }
+            { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: () => this.props.firebase.auth().signOut().then(() => this.props.history.push({ pathname: '/' })) }
         ]
 
         return (
@@ -53,6 +53,16 @@ class Header extends Component {
                     onClick={this.handleItemClick}
                 >
                     Create a job
+                </Menu.Item>
+
+                <Menu.Item
+                    as={Link}
+                    to='/dashboard'
+                    name='dashboard'
+                    active={activeItem === 'dashboard'}
+                    onClick={this.handleItemClick}
+                >
+                    Dashboard
                 </Menu.Item>
 
                 {isLogged ? (
@@ -93,4 +103,4 @@ class Header extends Component {
 export default compose(
     firebaseConnect(),
     connect(({ firebase: { auth } }) => ({ auth }))
-)(Header)
+)(withRouter(Header))
