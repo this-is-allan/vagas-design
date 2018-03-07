@@ -23,6 +23,8 @@ class JobsNew extends Component {
     }
 
     renderField(field) {
+        const { meta: { touched, error } } = field;
+        
         return (
             <Form.Field
                 id={field.id}
@@ -32,6 +34,7 @@ class JobsNew extends Component {
                 control={field.control}
                 {...field.input}
                 value={field.value}
+                error={touched ? error : false}
             />
         );
     }
@@ -79,8 +82,22 @@ class JobsNew extends Component {
     }
 }
 
+function validate(values) {
+    const errors = {};
+
+    if (!values.title) {
+        errors.title = true;
+    }
+
+    if (!values.description) {
+        errors.description = true;
+    }
+
+    return errors;
+}
 
 export default reduxForm({
+    validate,
     form: 'JobsNewForm'
 })(
     connect(null)(JobsNew)
