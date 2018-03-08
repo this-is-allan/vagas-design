@@ -2,13 +2,10 @@ import _ from 'lodash';
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid, Confirm, Table, Button, Checkbox, Card, Icon, Label } from 'semantic-ui-react'
-import faker from 'faker';
+import { Confirm, Table, Button, Checkbox, Icon, Label } from 'semantic-ui-react'
 import * as moment from 'moment';
 import { compose } from 'redux'
 import { firestoreConnect } from 'react-redux-firebase'
-import { withFirestore, isLoaded, isEmpty } from 'react-redux-firebase'
-
 
 
 class Dashboard extends Component {
@@ -45,6 +42,7 @@ class Dashboard extends Component {
                     open={this.state.open}
                     onCancel={this.handleCancel}
                     onConfirm={this.handleConfirm}
+                    size='tiny'
                 />
 
                 <Table compact celled definition>

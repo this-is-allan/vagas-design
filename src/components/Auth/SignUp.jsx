@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import { Message, Divider, Grid, Button, Icon, Form, Input } from 'semantic-ui-react';
-import { withFirebase, firebaseConnect } from 'react-redux-firebase'
-import { connect } from 'react-redux'
+import { Divider, Grid, Button, Icon, Form, Input } from 'semantic-ui-react';
+import { withFirebase } from 'react-redux-firebase'
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types'
-import { compose } from 'redux';
 import faker from 'faker';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class SignUp extends Component {
     static contextTypes = {
@@ -14,6 +12,7 @@ class SignUp extends Component {
     }
 
     login() {
+        /*eslint no-dupe-keys: "off"*/
         const config = {
             provider: "google",
             provider: "facebook",
@@ -25,15 +24,6 @@ class SignUp extends Component {
             }).catch(() => {
                 this.props.history.push({ pathname: '/login' })
         });
-        // const login = this.props.firebase.login({
-        //     provider: "google",
-        //     provider: "facebook",
-        //     type: "popup"
-        // })
-
-        // if (login) {
-        //     this.props.history.push({ pathname: '/' })
-        // }
     }
 
     onSubmit(values) {

@@ -2,8 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid, Card, Icon, Label } from 'semantic-ui-react'
-import faker from 'faker';
+import { Grid, Card, Label } from 'semantic-ui-react'
 import * as moment from 'moment';
 
 
