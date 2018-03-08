@@ -28,7 +28,7 @@ class Dashboard extends Component {
     }
     
     confirmDelete = (id) => this.setState({ jobId: id, open: true })
-    
+
     handleCancel = () => this.setState({ open: false })
 
     handleConfirm = () => {
@@ -99,7 +99,7 @@ class Dashboard extends Component {
 }
 
 export default compose(
-    firestoreConnect([{ collection: 'jobs' }]), // or { collection: 'todos' }
+    firestoreConnect([{ collection: 'jobs', orderBy: ['createdAt', 'desc'] }]),
     connect((state, props) => ({
         jobs: state.firestore.ordered.jobs
     }))
