@@ -12,13 +12,12 @@ class JobsNew extends Component {
 
     onSubmit(values) {
         const { firestore } = this.context.store;
-        const { title, description, remote, presential } = values;
         const status = false;
         const createdAt = firestore.FieldValue.serverTimestamp();
 
         firestore.add(
             { collection: 'jobs' },
-            { title, description, remote, presential, status, createdAt }
+            { values, status, createdAt }
         )
     }
 
