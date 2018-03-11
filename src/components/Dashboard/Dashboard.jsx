@@ -30,8 +30,15 @@ class Dashboard extends Component {
 
     handleConfirm = () => {
         const { firestore } = this.context.store;
+
         firestore.delete({ collection: 'jobs', doc: this.state.jobId })
         this.setState({ jobId: '', open: false })
+    }
+
+    toggleStatus = (id, status) => {
+        const { firestore } = this.context.store;
+
+        firestore.update(`jobs/${id}`, { status: !status })
     }
     
     render() {
@@ -61,7 +68,7 @@ class Dashboard extends Component {
                             return (
                                 <Table.Row key={job.id}>
                                     <Table.Cell collapsing>
-                                        <Checkbox slider checked={job.status} />
+                                        <Checkbox slider defaultChecked={job.status} onChange={this.toggleStatus.bind(this, job.id, job.status)} />
                                     </Table.Cell>
                                     <Table.Cell>{job.title.substr(0, 40)}...</Table.Cell>
                                     <Table.Cell>{moment(job.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</Table.Cell>
