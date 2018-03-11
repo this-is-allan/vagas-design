@@ -59,22 +59,25 @@ class JobsNew extends Component {
                     control={TextArea}
                     component={this.renderField}
                 />
-                <Field
-                    label="Remote"
-                    name="remote"
-                    id="remote"
-                    control={Checkbox}
-                    component={this.renderField}
-                    value="remote"
-                />
-                <Field
-                    label="Presential"
-                    name="presential"
-                    id="presential"
-                    control={Checkbox}
-                    component={this.renderField}
-                    value="presential"
-                />
+                <Form.Group grouped>
+                    <label>Select at least one</label>
+                    <Field
+                        label="Remote"
+                        name="remote"
+                        id="remote"
+                        control={Checkbox}
+                        component={this.renderField}
+                        value="remote"
+                    />
+                    <Field
+                        label="Presential"
+                        name="presential"
+                        id="presential"
+                        control={Checkbox}
+                        component={this.renderField}
+                        value="presential"
+                    />
+                </Form.Group>
                 <Button type='submit'>Create Job</Button>
             </Form>
         );
@@ -90,6 +93,11 @@ function validate(values) {
 
     if (!values.description) {
         errors.description = true;
+    }
+
+    if (!values.remote && !values.presential) {
+        errors.remote = true;
+        errors.presential = true;
     }
 
     return errors;
