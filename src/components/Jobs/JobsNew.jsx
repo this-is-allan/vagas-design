@@ -17,7 +17,7 @@ class JobsNew extends Component {
 
         firestore.add(
             { collection: 'jobs' },
-            { values, status, createdAt }
+            { ...values, status, createdAt }
         )
     }
 

@@ -63,7 +63,7 @@ class Dashboard extends Component {
                                     <Table.Cell collapsing>
                                         <Checkbox slider checked={job.status} />
                                     </Table.Cell>
-                                    <Table.Cell>{job.title.substring(0, 60)}...</Table.Cell>
+                                    <Table.Cell>{job.title.substr(0, 40)}...</Table.Cell>
                                     <Table.Cell>{moment(job.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</Table.Cell>
                                     <Table.Cell>
                                         {job.remote ? <Label color='green' icon='globe' content='Remote' /> : ''}
